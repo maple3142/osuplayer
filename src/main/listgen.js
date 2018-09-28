@@ -1,8 +1,8 @@
-const path = require('path')
-const fs = require('fs-extra')
-const Parser = require('./parser')
+import path from 'path'
+import fs from 'fs-extra'
+import Parser from './parser'
 
-module.exports = async osupath => {
+export default async osupath => {
 	if (!(await fs.exists(osupath))) {
 		throw new Error('invalid path')
 	}
@@ -24,6 +24,7 @@ module.exports = async osupath => {
 			const regr = /\d+/.exec(entry)
 			result.push({
 				title: data.Metadata.Title,
+				titleLower: data.Metadata.Title.toLowerCase(),
 				mp3: path.join(entry, data.General.AudioFilename),
 				artist: data.Metadata.Artist,
 				id: regr ? regr[0] : null,
@@ -42,10 +43,11 @@ module.exports = async osupath => {
 }
 if (require.main === module) {
 	const osupath = process.argv[2]
-	if (!osupath) return
-	module
-		.exports(osupath)
-		.then(JSON.stringify)
-		.then(console.log)
-		.catch(console.error)
+	if (osupath) {
+		module
+			.exports(osupath)
+			.then(JSON.stringify)
+			.then(console.log)
+			.catch(console.error)
+	}
 }

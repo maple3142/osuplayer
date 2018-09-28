@@ -35,7 +35,7 @@ class Parser {
 			this.obj[this.mode][k] = tryParseNum(v)
 		} else if (this.mode === 'Events' && line.startsWith('0,0,"')) {
 			// get bg file and break
-			this.obj.Metadata.bg = tryDecodeUri(/"(.+?)"/.exec(line)[1])
+			this.obj.Metadata.bg = /"(.+?)"/.exec(line)[1]
 			this.postProcess()
 			return true
 		} else if (this.mode === 'TimingPoints') {
@@ -47,6 +47,9 @@ class Parser {
 		// return false means not complete
 	}
 	postProcess() {
+		if (typeof this.obj.Metadata.Title === 'number') {
+			this.obj.Metadata.Title = this.obj.Metadata.Title.toString()
+		}
 		if (this.obj.Metadata.Tags) {
 			this.obj.Metadata.Tags = this.obj.Metadata.Tags.split('s')
 				.filter(x => x)
@@ -71,7 +74,8 @@ class Parser {
 		return parser.get()
 	}
 	static parseFromFile(filepath) {
-		const st = readline.createInterface({ input: fs.createReadStream(filepath), crlfDelay: Infinity })
+		const is = fs.createReadStream(filepath)
+		const st = readline.createInterface({ input: is, crlfDelay: Infinity })
 		return new Promise((res, rej) => {
 			const parser = new Parser()
 			let end = false
@@ -83,6 +87,7 @@ class Parser {
 					end = parser.eat(line)
 					if (end) {
 						st.close()
+						is.close()
 						res(parser.get())
 					}
 				} catch (e) {
@@ -91,10 +96,11 @@ class Parser {
 			})
 			st.on('close', e => {
 				st.close()
+				is.close()
 				if (e) rej(e)
 			})
 		})
 	}
 }
 Parser.ParseError = ParseError
-module.exports = Parser
+export default Parser
