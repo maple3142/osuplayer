@@ -5,7 +5,7 @@
 			<b-col>
 				<osu-path-input v-if="!osupath" />
 				<div v-else-if="list.length===0">
-					<h1>No songs found, maybe your osu! songs path is incorrect.</h1>
+					<h1>No songs are found, maybe your osu! songs path is incorrect.</h1>
 				</div>
 				<div class="h-100 d-flex flex-column"
 				     v-else>

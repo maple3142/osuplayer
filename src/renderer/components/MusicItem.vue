@@ -5,13 +5,14 @@
 		   :href="beatMapUrl"
 		   @click.prevent.stop="openUrl(beatMapUrl)">{{music.title}}</a>
 		<b-img class="pic"
-		       src="/static/picture.svg"
+		       :src="picture"
 		       v-b-modal.imgModal
 			   @click.stop="setModalMusic" />
 	</b-list-group-item>
 </template>
 <script>
 import { shell } from 'electron'
+import picture from '../assets/picture.svg'
 
 export default {
 	props: {
@@ -34,6 +35,9 @@ export default {
 	computed: {
 		beatMapUrl() {
 			return 'https://osu.ppy.sh/beatmapsets/' + this.music.id
+		},
+		picture(){
+			return picture
 		}
 	}
 }
