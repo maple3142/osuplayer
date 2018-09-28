@@ -1,3 +1,4 @@
+import path from 'path'
 import { app, BrowserWindow } from 'electron'
 import initIpc from './ipc'
 import './menu'
@@ -25,7 +26,8 @@ function createWindow() {
 		width: 1000,
 		webPreferences: {
 			webSecurity: false
-		}
+		},
+		icon: path.join(__dirname, '../../static/logo.png')
 	})
 
 	mainWindow.loadURL(winURL)
