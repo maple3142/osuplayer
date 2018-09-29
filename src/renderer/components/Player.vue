@@ -11,6 +11,8 @@
 import aplayer from 'vue-aplayer'
 import fs from 'fs-extra'
 
+aplayer.disableVersionBadge = true
+
 export default {
 	computed: {
 		music() {
@@ -19,7 +21,7 @@ export default {
 		},
 		musicobj() {
 			if (this.music == null) {
-				return { src: true, title: 'Empty', artist: 'Select a music to start playing' }
+				return { src: 'file://', title: 'Empty', artist: 'Select a music to start playing' }
 			}
 			return {
 				title: this.music.titleUnicode || this.music.title,

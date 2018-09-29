@@ -5,5 +5,5 @@ import db from './db'
 export default () => {
 	ipc.answerRenderer('getList', osupath => generateList(osupath))
 	ipc.answerRenderer('setDb', ({ key, value }) => db.set(key, value).write())
-	ipc.answerRenderer('getDb', ({ key }) => db.get(key).value())
+	ipc.answerRenderer('getDb', o => (o && o.key ? db.get(o.key).value() : db.value()))
 }

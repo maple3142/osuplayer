@@ -19,12 +19,8 @@ window.app = new Vue({
 	render: h => h(App)
 }).$mount('#app')
 
-ipc.callMain('getDb', { key: 'osupath' }).then(p => {
-	if (p) {
-		store.dispatch('updateOsupath', p)
-	}
-})
 ipc.answerMain('setOsupath', () => {
 	store.dispatch('updateOsupath', '')
 })
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+

@@ -6,8 +6,6 @@ import { app } from 'electron'
 const dbpath = path.join(app.getPath('userData'), 'db.json')
 const db = low(new FileSync(dbpath))
 
-db.defaults({
-	store: {}
-}).write()
+db.defaults({}).write()
 
 export default db

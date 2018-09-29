@@ -14,8 +14,6 @@ if (process.env.NODE_ENV !== 'development') {
 		.replace(/\\/g, '\\\\')
 }
 
-electronCtxMenu()
-
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
@@ -28,7 +26,7 @@ function createWindow() {
 		useContentSize: true,
 		width: 1000,
 		webPreferences: {
-			webSecurity: process.env.NODE_ENV !== 'development' 
+			webSecurity: process.env.NODE_ENV !== 'development'
 		},
 		icon: path.join(__dirname, '../../static/logo.png')
 	})
@@ -55,3 +53,5 @@ app.on('activate', () => {
 		createWindow()
 	}
 })
+
+process.on('uncaughtException', console.error)
