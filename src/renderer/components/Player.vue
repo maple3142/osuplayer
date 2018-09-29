@@ -2,8 +2,8 @@
 	<b-row align-h="center">
 		<b-col>
 			<aplayer ref="player"
-			         autoplay
-			         :music="musicobj" />
+			         :music="musicobj"
+			         @ended="endedHandler" />
 		</b-col>
 	</b-row>
 </template>
@@ -37,6 +37,11 @@ export default {
 				// it seems like that player component doesn't exists when music change...
 				this.$refs.player.thenPlay()
 			})
+		}
+	},
+	methods: {
+		endedHandler() {
+			console.log(1)
 		}
 	},
 	components: { aplayer }

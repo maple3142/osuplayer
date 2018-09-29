@@ -25,6 +25,7 @@
 	</b-row>
 </template>
 <script>
+import {actions} from '../store/ops'
 import { mapState } from 'vuex'
 import { remote } from 'electron'
 const { dialog } = remote
@@ -38,7 +39,7 @@ export default {
 	computed: mapState(['osupath']),
 	methods: {
 		setPath(path) {
-			this.$store.dispatch('updateOsupath', path)
+			this.$store.dispatch(actions.updateOsupath, path)
 		},
 		select() {
 			const r = dialog.showOpenDialog({ properties: ['openDirectory'] })
