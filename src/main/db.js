@@ -7,7 +7,7 @@ const dbpath = path.join(app.getPath('userData'), 'db.json')
 const db = low(new FileSync(dbpath))
 
 db.defaults({
-	osupath: null
+	store: {}
 }).write()
 
 export default db

@@ -50,6 +50,16 @@ class Parser {
 		if (typeof this.obj.Metadata.Title === 'number') {
 			this.obj.Metadata.Title = this.obj.Metadata.Title.toString()
 		}
+		if (!this.obj.Metadata.TitleUnicode) {
+			this.obj.Metadata.TitleUnicode = ''
+		} else {
+			this.obj.Metadata.TitleUnicode = this.obj.Metadata.TitleUnicode.toString()
+		}
+		if (!this.obj.Metadata.ArtistUnicode) {
+			this.obj.Metadata.ArtistUnicode = ''
+		} else {
+			this.obj.Metadata.ArtistUnicode = this.obj.Metadata.ArtistUnicode.toString()
+		}
 		if (this.obj.Metadata.Tags) {
 			this.obj.Metadata.Tags = this.obj.Metadata.Tags.split('s')
 				.filter(x => x)

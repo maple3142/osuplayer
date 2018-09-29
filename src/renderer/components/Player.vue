@@ -21,10 +21,12 @@ export default {
 			if (this.music == null) {
 				return { src: true, title: 'Empty', artist: 'Select a music to start playing' }
 			}
-			const buf = fs.readFileSync(this.music.bg)
-			const bloburl = URL.createObjectURL(new Blob([new Uint8Array(buf).buffer]))
-			const o = { title: this.music.title, artist: this.music.artist, src: this.music.mp3, pic: bloburl }
-			return o
+			return {
+				title: this.music.titleUnicode || this.music.title,
+				artist: this.music.artistUnicode || this.music.artist,
+				src: this.music.mp3,
+				pic: JSON.stringify('file://' + this.music.bg)
+			}
 		}
 	},
 	watch: {

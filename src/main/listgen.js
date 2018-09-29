@@ -20,15 +20,17 @@ export default async osupath => {
 			continue
 		}
 		try {
-			const data = await Parser.parseFromFile(osufiles[0])
+			const { Metadata, General } = await Parser.parseFromFile(osufiles[0])
 			const regr = /\d+/.exec(entry)
 			result.push({
-				title: data.Metadata.Title,
-				titleLower: data.Metadata.Title.toLowerCase(),
-				mp3: path.join(entry, data.General.AudioFilename),
-				artist: data.Metadata.Artist,
+				title: Metadata.Title,
+				titleLower: Metadata.Title.toLowerCase(),
+				titleUnicode: Metadata.TitleUnicode,
+				mp3: path.join(entry, General.AudioFilename),
+				artist: Metadata.Artist,
+				artistUnicode: Metadata.ArtistUnicode,
 				id: regr ? regr[0] : null,
-				bg: data.Metadata.bg ? path.join(entry, data.Metadata.bg) : null
+				bg: Metadata.bg ? path.join(entry, Metadata.bg) : null
 			})
 		} catch (e) {
 			console.error(e)

@@ -1,5 +1,6 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron'
+import electronCtxMenu from 'electron-context-menu'
 import initIpc from './ipc'
 import './menu'
 
@@ -13,6 +14,8 @@ if (process.env.NODE_ENV !== 'development') {
 		.replace(/\\/g, '\\\\')
 }
 
+electronCtxMenu()
+
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
@@ -25,7 +28,7 @@ function createWindow() {
 		useContentSize: true,
 		width: 1000,
 		webPreferences: {
-			webSecurity: false
+			webSecurity: process.env.NODE_ENV !== 'development' 
 		},
 		icon: path.join(__dirname, '../../static/logo.png')
 	})

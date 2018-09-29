@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ipc from 'electron-better-ipc'
+import dbSync from './dbSyncPlugin'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+	plugins: [dbSync(['osupath', 'list'])],
 	state: {
 		osupath: null,
 		list: [],
@@ -18,7 +20,7 @@ const store = new Vuex.Store({
 		setList(state, list) {
 			state.list = list
 		},
-		updateCurrent(state, current) {
+		setCurrent(state, current) {
 			state.current = current
 		},
 		setModalMusic(state, music) {
@@ -28,7 +30,6 @@ const store = new Vuex.Store({
 	actions: {
 		async updateOsupath({ commit, dispatch }, osupath) {
 			commit('setOsupath', osupath)
-			await ipc.callMain('setDb', { key: 'osupath', value: osupath })
 			if (osupath) {
 				await dispatch('updateListWithPath', osupath)
 			}
@@ -36,7 +37,7 @@ const store = new Vuex.Store({
 		async updateListWithPath({ commit }, osupath) {
 			const list = await ipc.callMain('getList', osupath)
 			commit('setList', list)
-			commit('updateCurrent', null)
+			commit('setCurrent', null)
 		}
 	}
 })

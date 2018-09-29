@@ -3,12 +3,13 @@
 		<b-col>
 			<div class="d-flex flex-column h-100">
 				<b-form-input class="mt-2"
-				              v-model="search"
+				              v-model="search"	
 				              placeholder="Search"></b-form-input>
 				<b-list-group class="mt-2 music-list">
-					<music-item v-for="music in filteredList"
+					<music-item v-for="music in list"
 					            :key="music.id+music.title"
 					            :music="music"
+								v-show="isMusicMatch(music)"
 					            @play="play(music)"
 					            :active="music===currentMusic"></music-item>
 				</b-list-group>
@@ -23,7 +24,7 @@ export default {
 	computed: {
 		...mapState(['list', 'current']),
 		filteredList() {
-			return this.list.filter(m => m.titleLower.includes(this.search.toLowerCase()))
+			return this.list.filter(m => m.titleLower.includes(this.search.toLowerCase()) || m.titleUnicode.includes(this.search))
 		},
 		currentMusic() {
 			return this.list[this.current]
@@ -37,7 +38,10 @@ export default {
 	},
 	methods: {
 		play(music) {
-			this.$store.commit('updateCurrent', this.list.indexOf(music))
+			this.$store.commit('setCurrent', this.list.indexOf(music))
+		},
+		isMusicMatch(m){
+			return m.titleLower.includes(this.search.toLowerCase()) || m.titleUnicode.includes(this.search)
 		}
 	}
 }

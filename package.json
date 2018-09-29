@@ -37,6 +37,7 @@
 	"dependencies": {
 		"bootstrap-vue": "^2.0.0-rc.11",
 		"electron-better-ipc": "^0.1.1",
+		"electron-context-menu": "^0.10.0",
 		"fs-extra": "^7.0.0",
 		"lowdb": "^1.0.0",
 		"vue": "^2.5.16",

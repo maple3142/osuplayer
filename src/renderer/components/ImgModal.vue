@@ -2,6 +2,7 @@
 	<b-modal id="imgModal"
 	         :title="modalMusic.title"
 	         :hide-header-close="true"
+			 :ok-only="true"
 	         ok-title="Close">
 		<b-img fluid
 		       :src="modalMusic.bg || ''" />

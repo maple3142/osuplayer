@@ -3,7 +3,7 @@
 	                   :active="active">
 		<a :class="{'text-white':active}"
 		   :href="beatMapUrl"
-		   @click.prevent.stop="openUrl(beatMapUrl)">{{music.title}}</a>
+		   @click.prevent.stop="openUrl(beatMapUrl)">{{music.titleUnicode || music.title}}</a>
 		<b-img class="pic"
 		       :src="picture"
 		       v-b-modal.imgModal
