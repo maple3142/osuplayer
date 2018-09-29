@@ -1,6 +1,6 @@
 <template>
 	<b-modal id="imgModal"
-	         :title="modalMusic.title"
+	         :title="modalMusic.titleUnicode || modalMusic.title"
 	         :hide-header-close="true"
 			 :ok-only="true"
 	         ok-title="Close">
