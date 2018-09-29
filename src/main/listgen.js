@@ -30,7 +30,7 @@ export default async osupath => {
 				artist: Metadata.Artist,
 				artistUnicode: Metadata.ArtistUnicode,
 				id: regr ? regr[0] : null,
-				bg: Metadata.bg ? path.join(entry, Metadata.bg) : null
+				bg: Metadata.bg ? path.join(entry, Metadata.bg) : ''
 			})
 		} catch (e) {
 			console.error(e)

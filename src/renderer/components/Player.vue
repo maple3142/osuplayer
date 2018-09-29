@@ -1,49 +1,51 @@
 <template>
 	<b-row align-h="center">
 		<b-col>
-			<aplayer ref="player"
-			         :music="musicobj"
-			         @ended="endedHandler" />
+			<div ref="player" />
 		</b-col>
 	</b-row>
 </template>
 <script>
-import aplayer from 'vue-aplayer'
+import { mapState } from 'vuex'
+import { mutations } from '../store/ops'
+import APlayer from 'aplayer'
+import 'APlayer/dist/APlayer.min.css'
 import fs from 'fs-extra'
-
-aplayer.disableVersionBadge = true
 
 export default {
 	computed: {
 		music() {
-			const { list, current } = this.$store.state
-			return list[current]
+			return this.list[this.current]
 		},
-		musicobj() {
-			if (this.music == null) {
-				return { src: 'file://', title: 'Empty', artist: 'Select a music to start playing' }
-			}
-			return {
-				title: this.music.titleUnicode || this.music.title,
-				artist: this.music.artistUnicode || this.music.artist,
-				src: this.music.mp3,
-				pic: JSON.stringify('file://' + this.music.bg)
-			}
+		...mapState(['current', 'list'])
+	},
+	data() {
+		return {
+			aplayer: null
 		}
 	},
 	watch: {
-		music() {
-			this.$nextTick(() => {
-				// it seems like that player component doesn't exists when music change...
-				this.$refs.player.thenPlay()
-			})
+		current() {
+			this.aplayer.list.switch(this.current)
+			this.aplayer.play()
 		}
 	},
-	methods: {
-		endedHandler() {
-			console.log(1)
-		}
-	},
-	components: { aplayer }
+	mounted() {
+		window.p = this
+		this.aplayer = new APlayer({
+			container: this.$refs.player,
+			listFolded: true,
+			order: 'random',
+			audio: this.list.map(m => ({
+				name: m.titleUnicode || m.title,
+				artist: m.artistUnicode || m.artist,
+				url: m.mp3,
+				cover: 'file://' + m.bg && m.bg.replace(/\\/g, '/')
+			}))
+		})
+		this.aplayer.on('listswitch', ({ index }) => {
+			this.$store.commit(mutations.setCurrent, index)
+		})
+	}
 }
 </script>
