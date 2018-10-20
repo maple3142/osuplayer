@@ -2,10 +2,14 @@
 
 > osu! music player
 
-## Preview
+## Desktop version
 
-![preview](https://i.imgur.com/gy6n8bA.png)
+Head for [release page](https://maple3142.github.io/osuplayer/) for downloading.
 
-## TODO
+![desktop preview](https://i.imgur.com/OkoyIH5.png)
 
-[ ] Playlist
+## Web version
+
+Web version is [here](https://maple3142.github.io/osuplayer/).
+
+![web preview](https://i.imgur.com/x5Y84TM.png)
