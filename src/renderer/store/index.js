@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ipc from 'electron-better-ipc'
-import dbSync from './dbSyncPlugin'
 import { mutations, actions } from './ops'
 
 Vue.use(Vuex)
 
+const plugins = []
+let ipc
+
+if (!process.env.IS_WEB) {
+	ipc = require('electron-better-ipc')
+	const dbSync = require('./dbSyncPlugin')
+	plugins.push(dbSync.default(['osupath', 'list', 'showpathinput']))
+}
+
 const store = new Vuex.Store({
-	plugins: [dbSync(['osupath', 'list'])],
+	plugins,
 	state: {
 		osupath: null,
+		showpathinput: true,
 		list: [],
 		current: null,
 		modalMusic: {}
@@ -26,11 +34,15 @@ const store = new Vuex.Store({
 		},
 		[mutations.setModalMusic](state, music) {
 			state.modalMusic = music
+		},
+		[mutations.setShowpathinput](state, showpathinput) {
+			state.showpathinput = showpathinput
 		}
 	},
 	actions: {
 		async [actions.updateOsupath]({ commit, dispatch }, osupath) {
-			commit('setOsupath', osupath)
+			commit(mutations.setOsupath, osupath)
+			commit(mutations.setShowpathinput, !osupath)
 			if (osupath) {
 				await dispatch(actions.updateListWithPath, osupath)
 			}

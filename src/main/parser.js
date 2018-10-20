@@ -1,15 +1,18 @@
-const fs = require('fs')
-const readline = require('readline')
+let fs, readline
+if (!process.env.IS_WEB) {
+	fs = require('fs')
+	readline = require('readline')
+}
+const tryDecodeURIComponent = s => {
+	try {
+		return decodeURIComponent(s)
+	} catch (e) {
+		return s
+	}
+}
 const tryParseNum = num => {
 	const n = Number(num)
 	return isNaN(n) ? num : n
-}
-const tryDecodeUri = str => {
-	try {
-		return decodeURIComponent(str)
-	} catch (e) {
-		return str
-	}
 }
 class ParseError extends Error {
 	constructor(content, e) {
@@ -64,6 +67,12 @@ class Parser {
 			this.obj.Metadata.Tags = this.obj.Metadata.Tags.split('s')
 				.filter(x => x)
 				.map(chk => chk.trim())
+		}
+		if (this.obj.General.AudioFilename) {
+			this.obj.General.AudioFilename = tryDecodeURIComponent(this.obj.General.AudioFilename)
+		}
+		if (this.obj.Metadata.bg) {
+			this.obj.Metadata.bg = tryDecodeURIComponent(this.obj.Metadata.bg)
 		}
 	}
 	get() {

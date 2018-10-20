@@ -10,7 +10,6 @@ import { mapState } from 'vuex'
 import { mutations } from '../store/ops'
 import APlayer from 'aplayer'
 import 'APlayer/dist/APlayer.min.css'
-import fs from 'fs-extra'
 
 export default {
 	computed: {
@@ -25,27 +24,45 @@ export default {
 		}
 	},
 	watch: {
-		current() {
+		async current() {
 			this.aplayer.list.switch(this.current)
 			this.aplayer.play()
 		}
 	},
 	mounted() {
-		window.p = this
+		let list = this.list.map(m => {
+			const cover = process.env.IS_WEB ? '' : 'file://' + m.bg && m.bg.replace(/\\/g, '/')
+			return {
+				name: m.titleUnicode || m.title,
+				artist: m.artistUnicode || m.artist,
+				url: m.mp3,
+				cover
+			}
+		})
 		this.aplayer = new APlayer({
 			container: this.$refs.player,
 			listFolded: true,
 			order: 'random',
-			audio: this.list.map(m => ({
-				name: m.titleUnicode || m.title,
-				artist: m.artistUnicode || m.artist,
-				url: m.mp3,
-				cover: 'file://' + m.bg && m.bg.replace(/\\/g, '/')
-			}))
+			audio: list
 		})
-		this.aplayer.on('listswitch', ({ index }) => {
+		this.aplayer.on('listswitch', async ({ index }) => {
+			if (process.env.IS_WEB) {
+				const m = this.list[index]
+				if (m.loaded) return
+				this.aplayer.pause()
+				await m.load()
+				this.aplayer.list.audios[index] = {
+					name: m.titleUnicode || m.title,
+					artist: m.artistUnicode || m.artist,
+					url: m.mp3,
+					cover: m.bg
+				}
+				this.aplayer.list.switch(index)
+				this.aplayer.play()
+			}
 			this.$store.commit(mutations.setCurrent, index)
 		})
+		this.aplayer.events.events.error = null // suppress error messages
 	}
 }
 </script>

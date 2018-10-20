@@ -1,6 +1,6 @@
 {
 	"name": "osuplayer",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "maple3142 <kirby741852963@gmail.com>",
 	"description": "osu! music player",
 	"license": "MIT",
@@ -45,7 +45,6 @@
 		"vue": "^2.5.16",
 		"vue-aplayer": "^1.6.1",
 		"vue-electron": "^1.0.6",
-		"vue-router": "^3.0.1",
 		"vuex": "^3.0.1"
 	},
 	"devDependencies": {

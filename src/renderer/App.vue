@@ -1,11 +1,14 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<home />
 	</div>
 </template>
 
 <script>
+import Home from './components/Home'
+
 export default {
-	name: 'osuplayer'
+	name: 'osuplayer',
+	components: { Home }
 }
 </script>

@@ -35,7 +35,12 @@ let webConfig = {
 			},
 			{
 				test: /\.css$/,
-				use: ['vue-style-loader', 'css-loader']
+				use: [
+					process.env.NODE_ENV !== 'production'
+						? 'vue-style-loader'
+						: { loader: MiniCssExtractPlugin.loader },
+					'css-loader'
+				]
 			},
 			{
 				test: /\.html$/,

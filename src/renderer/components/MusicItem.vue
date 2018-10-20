@@ -3,7 +3,8 @@
 	                   :active="active">
 		<a :class="{'text-white':active}"
 		   :href="beatMapUrl"
-		   @click.prevent.stop="openUrl(beatMapUrl)">{{music.titleUnicode || music.title}}</a>
+		   target="_blank"
+		   @click.stop="openUrl">{{music.titleUnicode || music.title}}</a>
 		<b-img class="pic"
 		       :src="picture"
 		       v-b-modal.imgModal
@@ -11,7 +12,6 @@
 	</b-list-group-item>
 </template>
 <script>
-import { shell } from 'electron'
 import picture from '../assets/picture.svg'
 import { mutations } from '../store/ops'
 
@@ -26,11 +26,17 @@ export default {
 		}
 	},
 	methods: {
-		setModalMusic() {
+		async setModalMusic() {
+			if (process.env.IS_WEB && !this.music.loaded) {
+				await this.music.load()
+			}
 			this.$store.commit(mutations.setModalMusic, this.music)
 		},
-		openUrl(url) {
-			shell.openExternal(url)
+		openUrl(e) {
+			if (!process.env.IS_WEB) {
+				e.preventDefault()
+				require('electron').shell.openExternal(this.beatMapUrl)
+			}
 		}
 	},
 	computed: {

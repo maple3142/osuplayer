@@ -3,7 +3,7 @@
 	             class="h-100">
 		<b-row class="h-100">
 			<b-col>
-				<osu-path-input v-if="!osupath" />
+				<osu-path-input v-if="showpathinput" />
 				<div v-else-if="list.length===0">
 					<h1>No songs are found, maybe your osu! songs path is incorrect.</h1>
 				</div>
@@ -31,7 +31,7 @@ export default {
 			pathinput: ''
 		}
 	},
-	computed: mapState(['osupath', 'list']),
+	computed: mapState(['osupath', 'list', 'showpathinput']),
 	components: { OsuPathInput, MusicList, Player, ImgModal }
 }
 </script>
