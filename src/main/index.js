@@ -23,6 +23,10 @@ function createWindow() {
 	/**
 	 * Initial window options
 	 */
+	const icon =
+		process.env.NODE_ENV !== 'development'
+			? path.join(global.__static, './logo.png')
+			: path.join(__dirname, '../../static/logo.png')
 	mainWindow = new BrowserWindow({
 		height: 563,
 		useContentSize: true,
@@ -30,7 +34,7 @@ function createWindow() {
 		webPreferences: {
 			webSecurity: process.env.NODE_ENV !== 'development'
 		},
-		icon: path.join(__dirname, '../../static/logo.png')
+		icon
 	})
 
 	mainWindow.loadURL(winURL)

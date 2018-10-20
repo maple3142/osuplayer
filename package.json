@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"main": "./dist/electron/main.js",
 	"scripts": {
-		"build": "node .electron-vue/build.js && electron-builder -w portable appx",
+		"build": "node .electron-vue/build.js && electron-builder -w nsis portable",
 		"build:dir": "node .electron-vue/build.js && electron-builder --dir",
 		"build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
 		"build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -28,7 +28,7 @@
 			"dist/electron/**/*"
 		],
 		"win": {
-			"icon": "build/icons/icon.ico"
+			"icon": "static/icon.ico"
 		},
 		"appx": {
 			"publisherDisplayName": "maple apps"
