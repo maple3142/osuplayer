@@ -27,9 +27,6 @@ export default {
 	},
 	methods: {
 		async setModalMusic() {
-			if (process.env.IS_WEB && !this.music.loaded) {
-				await this.music.load()
-			}
 			this.$store.commit(mutations.setModalMusic, this.music)
 		},
 		openUrl(e) {

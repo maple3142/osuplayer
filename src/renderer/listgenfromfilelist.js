@@ -1,14 +1,12 @@
 import Parser from '../main/parser'
 
-const readFileAs = wat => file => new Promise((res, rej) => {
-	const r = new FileReader()
-	r.onload = e => res(e.target.result)
-	r.onerror = rej
-	r[`readAs${wat}`](file)
-})
-const readFileAsText = readFileAs('Text')
-const readFileAsArrayBuffer = readFileAs('ArrayBuffer')
-const buf2url = buf => URL.createObjectURL(new Blob([buf]))
+const readFileAsText = file =>
+	new Promise((res, rej) => {
+		const r = new FileReader()
+		r.onload = e => res(e.target.result)
+		r.onerror = rej
+		r.readAsText(file)
+	})
 
 export default async files => {
 	const ar = [...files]
@@ -37,21 +35,9 @@ export default async files => {
 			titleUnicode: Metadata.TitleUnicode,
 			artist: Metadata.Artist,
 			artistUnicode: Metadata.ArtistUnicode,
-			id: rgxr ? rgxr[1] : null
-		}
-		// lazy load
-		let mp3, bg
-		Object.defineProperty(music, 'mp3', {
-			get: () => mp3
-		})
-		Object.defineProperty(music, 'bg', {
-			get: () => bg
-		})
-		music.load = async () => {
-			console.log('lazyload', { mp3file, bgfile, General, Metadata, files })
-			mp3 = mp3file ? buf2url(await readFileAsArrayBuffer(mp3file)) : ''
-			bg = bgfile ? buf2url(await readFileAsArrayBuffer(bgfile)) : ''
-			music.loaded = true
+			id: rgxr ? rgxr[1] : null,
+			mp3: mp3file ? URL.createObjectURL(mp3file) : '',
+			bg: bgfile ? URL.createObjectURL(bgfile) : ''
 		}
 		result.push(music)
 	}
