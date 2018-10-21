@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.runtime.esm.js'
+import Vue from 'vue/dist/vue.esm'
 import './bvimporter'
 import './style'
 
@@ -12,10 +12,10 @@ Object.defineProperty(Vue.prototype, 'IS_WEB', {
 	get: () => process.env.IS_WEB
 })
 
-window.app = new Vue({
+const app = new Vue({
 	store,
 	render: h => h(App)
-}).$mount('#app')
+}).$mount(document.getElementById('app'))
 
 if (!process.env.IS_WEB) {
 	const ipc = require('electron-better-ipc')
