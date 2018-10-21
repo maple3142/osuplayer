@@ -5,11 +5,12 @@ process.env.BABEL_ENV = 'web'
 const path = require('path')
 const webpack = require('webpack')
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const TerserPlugin = require('terser-webpack-plugin')
 
 let webConfig = {
 	devtool: '#cheap-module-eval-source-map',
@@ -103,9 +104,7 @@ let webConfig = {
 		}),
 		new webpack.DefinePlugin({
 			'process.env.IS_WEB': 'true'
-		}),
-		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin()
+		})
 	],
 	output: {
 		filename: '[name].js',
@@ -125,10 +124,34 @@ let webConfig = {
  * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-	webConfig.devtool = ''
-
+	webConfig.devtool = 'source-map'
+	webConfig.mode = 'production'
+	webConfig.optimization = {
+		minimize: true,
+		concatenateModules: true,
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					ecma: 6,
+					warnings: false,
+					parse: {},
+					compress: {},
+					mangle: true,
+					module: false,
+					output: null,
+					toplevel: false,
+					nameCache: null,
+					ie8: false,
+					keep_classnames: undefined,
+					keep_fnames: false,
+					safari10: false
+				},
+				sourceMap: true
+			})
+		],
+		sideEffects: false
+	}
 	webConfig.plugins.push(
-		new BabiliWebpackPlugin(),
 		new CopyWebpackPlugin([
 			{
 				from: path.join(__dirname, '../static'),
@@ -139,8 +162,17 @@ if (process.env.NODE_ENV === 'production') {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': '"production"'
 		}),
-		new webpack.LoaderOptionsPlugin({
-			minimize: true
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'server',
+			analyzerHost: '127.0.0.1',
+			analyzerPort: 8889,
+			reportFilename: 'report.html',
+			defaultSizes: 'gzip',
+			openAnalyzer: true,
+			generateStatsFile: false,
+			statsFilename: 'stats.json',
+			statsOptions: null,
+			logLevel: 'info'
 		})
 	)
 }

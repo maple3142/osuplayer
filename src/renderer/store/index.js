@@ -56,3 +56,12 @@ const store = new Vuex.Store({
 })
 
 export default store
+
+// title updater
+store.subscribe(() => {
+	const { state } = store
+	if (state.list && typeof state.current === 'number') {
+		const m = state.list[state.current]
+		document.title = m.titleUnicode || m.title
+	}
+})

@@ -18,7 +18,10 @@
 					"env",
 					{
 						"modules": false,
-						"targets": "modern"
+						"targets": {
+							"electron": "3"
+						},
+						"loose": true
 					}
 				],
 				"stage-0"
@@ -30,12 +33,15 @@
 					"env",
 					{
 						"modules": false,
-						"targets": "modern"
+						"targets": {
+							"chrome": "60",
+							"firefox": "57"
+						},
+						"loose": true
 					}
 				],
 				"stage-0"
 			]
-		}
-	},
-	"plugins": ["transform-runtime"]
+		} 
+	}
 }

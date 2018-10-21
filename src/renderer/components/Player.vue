@@ -10,6 +10,7 @@ import { mapState } from 'vuex'
 import { mutations } from '../store/ops'
 import APlayer from 'aplayer'
 import 'APlayer/dist/APlayer.min.css'
+import { setImmediate } from 'timers';
 
 export default {
 	computed: {
@@ -26,7 +27,7 @@ export default {
 	watch: {
 		async current() {
 			this.aplayer.list.switch(this.current)
-			this.aplayer.play()
+			setImmediate(() => this.aplayer.play())
 		}
 	},
 	mounted() {

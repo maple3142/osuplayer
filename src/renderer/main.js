@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap-css-only/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vue from 'vue/dist/vue.runtime.esm.js'
+import './bvimporter'
 import './style'
 
 import App from './App'
@@ -10,7 +8,6 @@ import { actions } from './store/ops'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
-Vue.use(BootstrapVue)
 Object.defineProperty(Vue.prototype, 'IS_WEB', {
 	get: () => process.env.IS_WEB
 })
