@@ -8,3 +8,9 @@ patch:
         patched: '2019-07-03T22:28:33.816Z'
     - bootstrap-vue > opencollective > inquirer > lodash:
         patched: '2019-07-03T22:28:33.816Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-09-01T22:26:46.684Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-09-01T22:26:46.684Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-09-01T22:26:46.684Z'
