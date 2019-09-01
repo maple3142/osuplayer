@@ -48,6 +48,7 @@ export default {
 		this.aplayer.on('listswitch', async ({ index }) => {
 			this.$store.commit(mutations.setCurrent, index)
 		})
+		window.aplayer = this.aplayer
 	}
 }
 </script>

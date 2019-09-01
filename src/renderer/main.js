@@ -16,10 +16,14 @@ const app = new Vue({
 	store,
 	render: h => h(App)
 }).$mount(document.getElementById('app'))
+window.app = app
 
 if (!process.env.IS_WEB) {
 	const ipc = require('electron-better-ipc')
 	ipc.answerMain('setOsupath', () => {
+		if (window.aplayer && !aplayer.paused) {
+			aplayer.pause()
+		}
 		store.dispatch(actions.updateOsupath, '')
 	})
 }
