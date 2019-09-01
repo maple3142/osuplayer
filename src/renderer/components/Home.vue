@@ -37,6 +37,9 @@ export default {
 </script>
 <style scoped>
 .player {
-	min-height: 80px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 10;
 }
 </style>
