@@ -9,7 +9,7 @@
 import { mapState } from 'vuex'
 import { mutations } from '../store/ops'
 import APlayer from 'aplayer'
-import 'APlayer/dist/APlayer.min.css'
+import 'aplayer/dist/APlayer.min.css'
 import { setImmediate } from 'timers';
 
 export default {
