@@ -17,7 +17,9 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "npm run lint:fix"
+    "postinstall": "npm run lint:fix",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "build": {
     "productName": "osuplayer",
@@ -43,7 +45,7 @@
     "electron-context-menu": "^0.10.0",
     "fs-extra": "^7.0.0",
     "lowdb": "^1.0.0",
-    "snyk": "^1.189.0",
+    "snyk": "^1.230.5",
     "vue": "^2.5.17",
     "vue-aplayer": "^1.6.1",
     "vue-electron": "^1.0.6",
