@@ -40,7 +40,7 @@
     "bootstrap-css-only": "^4.1.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "electron-better-ipc": "^0.1.1",
-    "electron-context-menu": "^0.10.0",
+    "electron-context-menu": "^1.0.0",
     "fs-extra": "^7.0.0",
     "lowdb": "^1.0.0",
     "snyk": "^1.189.0",
