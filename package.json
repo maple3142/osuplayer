@@ -43,7 +43,7 @@
     "electron-context-menu": "^0.10.0",
     "fs-extra": "^7.0.0",
     "lowdb": "^1.0.0",
-    "snyk": "^1.189.0",
+    "snyk": "^1.465.0",
     "vue": "^2.5.17",
     "vue-aplayer": "^1.6.1",
     "vue-electron": "^1.0.6",
